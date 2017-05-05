@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2008-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2008-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -351,6 +351,9 @@ check_result(CtRunTestResult,ExitStatus,Opts)
     catch _:_ ->
 	    {error,{unexpected_return_value,{CtRunTestResult,ExitStatus}}}
     end;
+check_result(done,0,_Opts) ->
+    %% refresh_logs return
+    ok;
 check_result(CtRunTestResult,ExitStatus,_Opts) ->
     {error,{unexpected_return_value,{CtRunTestResult,ExitStatus}}}.
 

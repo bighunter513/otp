@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2004-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2004-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -39,8 +39,9 @@ connect(Port, Options) when is_integer(Port) ->
 connect(any, Port, Options) ->
     connect(hostname(), Port, Options);
 connect(Host, Port, Options) ->
-    ct:log("~p:~p Calling ssh:connect(~p, ~p, ~p)",[?MODULE,?LINE,Host, Port, Options]),
-    {ok, ConnectionRef} = ssh:connect(Host, Port, Options),
+    R = ssh:connect(Host, Port, Options),
+    ct:log("~p:~p ssh:connect(~p, ~p, ~p)~n -> ~p",[?MODULE,?LINE,Host, Port, Options, R]),
+    {ok, ConnectionRef} = R,
     ConnectionRef.
 
 %%%----------------------------------------------------------------
@@ -858,8 +859,9 @@ get_kex_init(Conn) ->
 
 get_kex_init(Conn, Ref, TRef) ->
     %% First, validate the key exchange is complete (StateName == connected)
-    case sys:get_state(Conn) of
-	{{connected,_}, S} ->
+    {State, S} = sys:get_state(Conn),
+    case expected_state(State) of
+	true ->
 	    timer:cancel(TRef),
 	    %% Next, walk through the elements of the #state record looking
 	    %% for the #ssh_msg_kexinit record. This method is robust against
@@ -873,8 +875,8 @@ get_kex_init(Conn, Ref, TRef) ->
 		    KexInit
 	    end;
 
-	{OtherState, S} ->
-	    ct:log("Not in 'connected' state: ~p",[OtherState]),
+	false ->
+	    ct:log("Not in 'connected' state: ~p",[State]),
 	    receive
 		{reneg_timeout,Ref} -> 
 		    ct:log("S = ~p", [S]),
@@ -886,6 +888,10 @@ get_kex_init(Conn, Ref, TRef) ->
 	    end
     end.
     
+expected_state({ext_info,_,_}) -> true;
+expected_state({connected,_}) -> true;
+expected_state(_) -> false.
+
 %%%----------------------------------------------------------------
 %%% Return a string with N random characters
 %%%

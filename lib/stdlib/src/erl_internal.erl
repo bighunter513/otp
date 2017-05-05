@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 1998-2016. All Rights Reserved.
+%% Copyright Ericsson AB 1998-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -331,6 +331,8 @@ bif(list_to_float, 1) -> true;
 bif(list_to_integer, 1) -> true;
 bif(list_to_integer, 2) -> true;
 bif(list_to_pid, 1) -> true;
+bif(list_to_port, 1) -> true;
+bif(list_to_ref, 1) -> true;
 bif(list_to_tuple, 1) -> true;
 bif(load_module, 2) -> true;
 bif(make_ref, 0) -> true;
@@ -348,6 +350,7 @@ bif(nodes, 1) -> true;
 bif(now, 0) -> true;
 bif(open_port, 2) -> true;
 bif(pid_to_list, 1) -> true;
+bif(port_to_list, 1) -> true;
 bif(port_close, 1) -> true;
 bif(port_command, 2) -> true;
 bif(port_command, 3) -> true;
@@ -361,6 +364,7 @@ bif(process_info, 2) -> true;
 bif(processes, 0) -> true;
 bif(purge_module, 1) -> true;
 bif(put, 2) -> true;
+bif(ref_to_list, 1) -> true;
 bif(register, 2) -> true;
 bif(registered, 0) -> true;
 bif(round, 1) -> true;

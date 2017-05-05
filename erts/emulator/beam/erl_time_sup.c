@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 1999-2016. All Rights Reserved.
+ * Copyright Ericsson AB 1999-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -678,7 +678,6 @@ check_time_correction(void *vesdp)
     erts_twheel_set_timer(esdp->timer_wheel,
 			  &time_sup.inf.c.parmon.timer,
 			  check_time_correction,
-			  NULL,
 			  (void *) esdp,
 			  timeout_pos);
 }
@@ -729,7 +728,6 @@ check_time_offset(void *vesdp)
     erts_twheel_set_timer(esdp->timer_wheel,
 			  &time_sup.inf.c.parmon.timer,
 			  check_time_offset,
-			  NULL,
 			  vesdp,
 			  timeout_pos);
 }
@@ -836,7 +834,6 @@ late_init_time_correction(ErtsSchedulerData *esdp)
     erts_twheel_set_timer(esdp->timer_wheel,
 			  &time_sup.inf.c.parmon.timer,
 			  check_func,
-			  NULL,
 			  (quick_init_drift_adj
 			   ? NULL
 			   : esdp),

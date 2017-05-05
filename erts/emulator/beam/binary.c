@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 1996-2016. All Rights Reserved.
+ * Copyright Ericsson AB 1996-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,6 @@ new_binary(Process *p, byte *buf, Uint len)
      * Allocate the binary struct itself.
      */
     bptr = erts_bin_nrml_alloc(len);
-    erts_refc_init(&bptr->refc, 1);
     if (buf != NULL) {
 	sys_memcpy(bptr->orig_bytes, buf, len);
     }
@@ -121,7 +120,6 @@ Eterm erts_new_mso_binary(Process *p, byte *buf, Uint len)
      * Allocate the binary struct itself.
      */
     bptr = erts_bin_nrml_alloc(len);
-    erts_refc_init(&bptr->refc, 1);
     if (buf != NULL) {
 	sys_memcpy(bptr->orig_bytes, buf, len);
     }

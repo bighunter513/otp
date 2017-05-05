@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2008-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2008-2017. All Rights Reserved.
 %%
 %% The contents of this file are subject to the Erlang Public License,
 %% Version 1.1, (the "License"); you may not use this file except in
@@ -752,6 +752,7 @@ connect_and_kex(Config, InitialState) ->
                                 {cipher,?DEFAULT_CIPHERS}
                                ]},
 	 {silently_accept_hosts, true},
+         {recv_ext_info, false},
 	 {user_dir, user_dir(Config)},
 	 {user_interaction, false}]},
        receive_hello,

@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2003-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2003-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -474,8 +474,8 @@ event(_X, S) ->
 %% into multiple objects (in which case {Acc',Pos',S'} should be returned.)
 %% If {Acc',S'} is returned, Pos will be incremented by 1 by default.
 %% Below is an example of an acceptable operation
-acc(X = #xmlText{value = Text}, Acc, S) ->
-    {[X#xmlText{value = Text}|Acc], S};
+acc(#xmlText{value = Text}, [X = #xmlText{value = AccText}], S) ->
+    {[X#xmlText{value = AccText ++ Text}], S};
 acc(X, Acc, S) ->
     {[X|Acc], S}.
 

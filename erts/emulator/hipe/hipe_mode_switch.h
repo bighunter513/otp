@@ -2,7 +2,7 @@
  * %CopyrightBegin%
 
  *
- * Copyright Ericsson AB 2001-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2001-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@
 extern int hipe_modeswitch_debug;
 
 void hipe_mode_switch_init(void);
-void hipe_set_call_trap(Uint *bfun, void *nfun, int is_closure);
+void hipe_set_call_trap(ErtsCodeInfo*, void *nfun, int is_closure);
 Process *hipe_mode_switch(Process*, unsigned, Eterm*);
 void hipe_inc_nstack(Process *p);
 void hipe_empty_nstack(Process *p);

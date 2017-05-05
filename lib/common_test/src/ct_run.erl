@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2004-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2004-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -363,6 +363,12 @@ script_start1(Parent, Args) ->
 	_ ->
 	    application:set_env(common_test, disable_log_cache, true)
     end,
+    %% log_cleanup - used by ct_logs
+    KeepLogs = get_start_opt(keep_logs,
+                             fun ct_logs:parse_keep_logs/1,
+                             all,
+                             Args),
+    application:set_env(common_test, keep_logs, KeepLogs),
 
     Opts = #opts{label = Label, profile = Profile,
 		 vts = Vts, shell = Shell,
@@ -970,6 +976,12 @@ run_test1(StartOpts) when is_list(StartOpts) ->
 	    stop_trace(Tracing),
 	    exit(Res);
 	RefreshDir ->
+            %% log_cleanup - used by ct_logs
+            KeepLogs = get_start_opt(keep_logs,
+                                     fun ct_logs:parse_keep_logs/1,
+                                     all,
+                                     StartOpts),
+            application:set_env(common_test, keep_logs, KeepLogs),
 	    ok = refresh_logs(?abs(RefreshDir)),
 	    exit(done)
     end.
@@ -1131,6 +1143,12 @@ run_test2(StartOpts) ->
 	DisableCacheBool ->
 	    application:set_env(common_test, disable_log_cache, DisableCacheBool)
     end,
+    %% log_cleanup - used by ct_logs
+    KeepLogs = get_start_opt(keep_logs,
+                             fun ct_logs:parse_keep_logs/1,
+                             all,
+                             StartOpts),
+    application:set_env(common_test, keep_logs, KeepLogs),
 
     %% stepped execution
     Step = get_start_opt(step, value, StartOpts),

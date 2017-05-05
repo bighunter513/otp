@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 2009-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2009-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -235,6 +235,11 @@ typedef enum {
 typedef enum {
     ERL_NIF_BIN2TERM_SAFE = 0x20000000
 } ErlNifBinaryToTerm;
+
+typedef enum {
+    ERL_NIF_INTERNAL_HASH = 1,
+    ERL_NIF_PHASH2 = 2
+} ErlNifHash;
 
 /*
  * Return values from enif_thread_type(). Negative values

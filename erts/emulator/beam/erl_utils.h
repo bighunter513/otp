@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 2012-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2012-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,7 +120,7 @@ int erts_is_builtin(Eterm, Eterm, int);
 Uint32 block_hash(byte *, unsigned, Uint32);
 Uint32 make_hash2(Eterm);
 Uint32 make_hash(Eterm);
-Uint32 make_internal_hash(Eterm);
+Uint32 make_internal_hash(Eterm, Uint32 salt);
 
 void erts_save_emu_args(int argc, char **argv);
 Eterm erts_get_emu_args(struct process *c_p);

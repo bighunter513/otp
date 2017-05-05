@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 2002-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2002-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -678,10 +678,6 @@ erts_alloc_init(int *argc, char **argv, ErtsAllocInitOpts *eaiop)
 	= erts_timer_type_size(ERTS_ALC_T_HL_PTIMER);
     fix_type_sizes[ERTS_ALC_FIX_TYPE_IX(ERTS_ALC_T_BIF_TIMER)]
 	= erts_timer_type_size(ERTS_ALC_T_BIF_TIMER);
-#ifdef ERTS_BTM_ACCESSOR_SUPPORT
-    fix_type_sizes[ERTS_ALC_FIX_TYPE_IX(ERTS_ALC_T_ABIF_TIMER)]
-	= erts_timer_type_size(ERTS_ALC_T_ABIF_TIMER);
-#endif
     fix_type_sizes[ERTS_ALC_FIX_TYPE_IX(ERTS_ALC_T_NIF_EXP_TRACE)]
 	= sizeof(NifExportTrace);
     fix_type_sizes[ERTS_ALC_FIX_TYPE_IX(ERTS_ALC_T_MREF_NSCHED_ENT)]
@@ -2440,12 +2436,6 @@ erts_memory(fmtfn_t *print_to_p, void *print_to_arg, void *proc, Eterm earg)
 		       &size.processes_used,
 		       fi,
 		       ERTS_ALC_T_BIF_TIMER);
-#ifdef ERTS_BTM_ACCESSOR_SUPPORT
-	add_fix_values(&size.processes,
-		       &size.processes_used,
-		       fi,
-		       ERTS_ALC_T_ABIF_TIMER);
-#endif
 	add_fix_values(&size.processes,
 		       &size.processes_used,
 		       fi,

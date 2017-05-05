@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2008-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2008-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -389,6 +389,9 @@ stru([]) ->
     [];
 stru([{_,<<>>}|T]) ->
     stru(T);
+stru([{_Line,<<"< forbid ", _Rest/binary>>}|T0]) ->
+    %% We do not handle lockout of modifiers from the tests...
+    stru(T0);
 stru([{Line,<<Ch,Re0/binary>>}|T0]) ->
     {T,Re} = find_rest_re(Ch,[{Line,Re0}|T0]),
     {NewRe,<< Ch, Options/binary >>} = end_of_re(Ch,Re),

@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 1998-2016. All Rights Reserved.
+ * Copyright Ericsson AB 1998-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -189,7 +189,7 @@ static ERTS_INLINE int add_fixed_deletion(DbTableHash* tb, int ix,
 /* optimised version of make_hash (normal case? atomic key) */
 #define MAKE_HASH(term) \
     ((is_atom(term) ? (atom_tab(atom_val(term))->slot.bucket.hvalue) : \
-      make_internal_hash(term)) % MAX_HASH)
+      make_internal_hash(term, 0)) % MAX_HASH)
 
 #ifdef ERTS_SMP
 #  define DB_HASH_LOCK_MASK (DB_HASH_LOCK_CNT-1)
@@ -1258,7 +1258,7 @@ static int match_traverse(Process* p, DbTableHash* tb,
     }
 
     if (mpi.all_objects) {
-        mpi.mp->flags |= BIN_FLAG_ALL_OBJECTS;
+        mpi.mp->intern.flags |= BIN_FLAG_ALL_OBJECTS;
     }
 
     /*
@@ -1383,7 +1383,7 @@ static int match_traverse_continue(Process* p, DbTableHash* tb,
                                    void* context_ptr, /* For callbacks */
                                    Eterm* ret)
 {
-    int all_objects = (*mpp)->flags & BIN_FLAG_ALL_OBJECTS;
+    int all_objects = (*mpp)->intern.flags & BIN_FLAG_ALL_OBJECTS;
     HashDbTerm** current_ptr;  /* Refers to either the bucket pointer or
                                        * the 'next' pointer in the previous term
                                        */

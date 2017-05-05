@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 1999-2016. All Rights Reserved.
+%% Copyright Ericsson AB 1999-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -1031,15 +1031,15 @@ validate_option(protocol, Value = dtls) ->
 validate_option(Opt, Value) ->
     throw({error, {options, {Opt, Value}}}).
 
-handle_hashsigns_option(Value, {Major, Minor} = Version) when is_list(Value) 
-							      andalso Major >= 3 andalso Minor >= 3->
+handle_hashsigns_option(Value, Version) when is_list(Value) 
+                                             andalso Version >= {3, 3} ->
     case tls_v1:signature_algs(Version, Value) of
 	[] ->
 	    throw({error, {options, no_supported_algorithms, {signature_algs, Value}}});
 	_ ->	
 	    Value
     end;
-handle_hashsigns_option(_, {Major, Minor} = Version) when Major >= 3 andalso Minor >= 3->
+handle_hashsigns_option(_, Version) when Version >= {3, 3} ->
     handle_hashsigns_option(tls_v1:default_signature_algs(Version), Version);
 handle_hashsigns_option(_, _Version) ->
     undefined.

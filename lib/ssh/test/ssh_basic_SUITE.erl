@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2008-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2008-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -651,6 +651,7 @@ exec_key_differs_fail(Config) when is_list(Config) ->
 
     IO = ssh_test_lib:start_io_server(),
     ssh_test_lib:start_shell(Port, IO, [{user_dir,UserDir},
+                                        {recv_ext_info, false},
 					{preferred_algorithms,[{public_key,['ssh-rsa']}]},
 					{pref_public_key_algs,['ssh-dss']}]),
     receive
@@ -1366,13 +1367,25 @@ new_do_shell(IO, N, Ops=[{Order,Arg}|More]) ->
 	    ct:log("Skip newline ~p",[_X]),
 	    new_do_shell(IO, N, Ops);
 	
-	<<Pfx:PfxSize/binary,P1,"> ">> when (P1-$0)==N -> 
+	<<P1,"> ">> when (P1-$0)==N -> 
+	    new_do_shell_prompt(IO, N, Order, Arg, More);
+	<<"(",Pfx:PfxSize/binary,")",P1,"> ">> when (P1-$0)==N -> 
+	    new_do_shell_prompt(IO, N, Order, Arg, More);
+	<<"('",Pfx:PfxSize/binary,"')",P1,"> ">> when (P1-$0)==N -> 
 	    new_do_shell_prompt(IO, N, Order, Arg, More);
 
-	<<Pfx:PfxSize/binary,P1,P2,"> ">> when (P1-$0)*10 + (P2-$0) == N -> 
+	<<P1,P2,"> ">> when (P1-$0)*10 + (P2-$0) == N -> 
+	    new_do_shell_prompt(IO, N, Order, Arg, More);
+	<<"(",Pfx:PfxSize/binary,")",P1,P2,"> ">> when (P1-$0)*10 + (P2-$0) == N -> 
+	    new_do_shell_prompt(IO, N, Order, Arg, More);
+	<<"('",Pfx:PfxSize/binary,"')",P1,P2,"> ">> when (P1-$0)*10 + (P2-$0) == N -> 
 	    new_do_shell_prompt(IO, N, Order, Arg, More);
 
-	<<Pfx:PfxSize/binary,P1,P2,P3,"> ">> when (P1-$0)*100 + (P2-$0)*10 + (P3-$0) == N -> 
+	<<P1,P2,P3,"> ">> when (P1-$0)*100 + (P2-$0)*10 + (P3-$0) == N -> 
+	    new_do_shell_prompt(IO, N, Order, Arg, More);
+	<<"(",Pfx:PfxSize/binary,")",P1,P2,P3,"> ">> when (P1-$0)*100 + (P2-$0)*10 + (P3-$0) == N -> 
+	    new_do_shell_prompt(IO, N, Order, Arg, More);
+	<<"('",Pfx:PfxSize/binary,"')",P1,P2,P3,"> ">> when (P1-$0)*100 + (P2-$0)*10 + (P3-$0) == N -> 
 	    new_do_shell_prompt(IO, N, Order, Arg, More);
 
 	Err when element(1,Err)==error ->
@@ -1408,7 +1421,7 @@ prompt_prefix() ->
     case node() of
 	nonode@nohost -> <<>>;
 	Node -> list_to_binary(
-		  lists:concat(["(",Node,")"]))
+                  atom_to_list(Node))
     end.
 	    
 

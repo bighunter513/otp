@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2001-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2001-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -108,11 +108,14 @@ is_pure(erlang, list_to_binary, 1) -> true;
 is_pure(erlang, list_to_float, 1) -> true;
 is_pure(erlang, list_to_integer, 1) -> true;
 is_pure(erlang, list_to_pid, 1) -> true;
+is_pure(erlang, list_to_port, 1) -> true;
+is_pure(erlang, list_to_ref, 1) -> true;
 is_pure(erlang, list_to_tuple, 1) -> true;
 is_pure(erlang, max, 2) -> true;
 is_pure(erlang, min, 2) -> true;
 is_pure(erlang, phash, 2) -> false;
 is_pure(erlang, pid_to_list, 1) -> true;
+is_pure(erlang, port_to_list, 1) -> true;
 is_pure(erlang, round, 1) -> true;
 is_pure(erlang, setelement, 3) -> true;
 is_pure(erlang, size, 1) -> true;

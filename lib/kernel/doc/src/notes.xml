@@ -4,7 +4,7 @@
 <chapter>
   <header>
     <copyright>
-      <year>2004</year><year>2016</year>
+      <year>2004</year><year>2017</year>
       <holder>Ericsson AB. All Rights Reserved.</holder>
     </copyright>
     <legalnotice>
@@ -165,6 +165,14 @@
 	    distribution sockets in runtime.</p>
           <p>
 	    Own Id: OTP-13564</p>
+        </item>
+        <item>
+          <p>
+	    Rudimentary support for DSCP has been implemented
+	    in the guise of a <c>tclass</c> socket option
+	    for IPv6 sockets.</p>
+          <p>
+	    Own Id: OTP-13582</p>
         </item>
       </list>
     </section>

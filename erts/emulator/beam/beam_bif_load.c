@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 1999-2016. All Rights Reserved.
+ * Copyright Ericsson AB 1999-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -233,7 +233,7 @@ prepare_loading_2(BIF_ALIST_2)
     }
     hp = HAlloc(BIF_P, ERTS_MAGIC_REF_THING_SIZE);
     res = erts_mk_magic_ref(&hp, &MSO(BIF_P), magic);
-    erts_refc_dec(&magic->refc, 1);
+    erts_refc_dec(&magic->intern.refc, 1);
     BIF_RET(res);
 }
 
@@ -435,7 +435,7 @@ finish_loading_1(BIF_ALIST_1)
 	    Eterm mod;
 	    Eterm retval;
 
-	    erts_refc_inc(&p[i].code->refc, 1);
+	    erts_refc_inc(&p[i].code->intern.refc, 1);
 	    retval = erts_finish_loading(p[i].code, BIF_P, 0, &mod);
 	    ASSERT(retval == NIL || retval == am_on_load);
 	    if (retval == am_on_load) {

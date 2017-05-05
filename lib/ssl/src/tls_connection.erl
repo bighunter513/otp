@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2007-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2007-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -220,7 +220,7 @@ init({call, From}, {start, Timeout},
 				       Cache, CacheCb, Renegotiation, Cert),
     
     Version = Hello#client_hello.client_version,
-    HelloVersion = tls_record:lowest_protocol_version(SslOpts#ssl_options.versions),
+    HelloVersion = tls_record:hello_version(Version, SslOpts#ssl_options.versions),
     Handshake0 = ssl_handshake:init_handshake_history(),
     {BinMsg, ConnectionStates, Handshake} =
         encode_handshake(Hello,  HelloVersion, ConnectionStates0, Handshake0, V2HComp),

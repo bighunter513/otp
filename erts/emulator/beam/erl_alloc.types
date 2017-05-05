@@ -1,7 +1,7 @@
 #
 # %CopyrightBegin%
 #
-# Copyright Ericsson AB 2003-2016. All Rights Reserved.
+# Copyright Ericsson AB 2003-2017. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -168,7 +168,6 @@ type	TIMER_SERVICE	LONG_LIVED	SYSTEM		timer_service
 type    LL_PTIMER	FIXED_SIZE	PROCESSES	ll_ptimer
 type    HL_PTIMER	FIXED_SIZE	PROCESSES	hl_ptimer
 type    BIF_TIMER	FIXED_SIZE	PROCESSES	bif_timer
-# type    ABIF_TIMER	FIXED_SIZE	PROCESSES	accessor_bif_timer
 type    TIMER_REQUEST	SHORT_LIVED	PROCESSES	timer_request
 type    BTM_YIELD_STATE	SHORT_LIVED	PROCESSES	btm_yield_state
 type	REG_TABLE	STANDARD	SYSTEM		reg_tab

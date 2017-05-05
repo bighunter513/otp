@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 1996-2016. All Rights Reserved.
+ * Copyright Ericsson AB 1996-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -184,6 +184,12 @@ void sys_primitive_init(HMODULE beam)
     _set_invalid_parameter_handler(&erts_sys_invalid_parameter_handler);
 #endif
     beam_module = (HMODULE) beam;
+}
+
+UWord
+erts_sys_get_page_size(void)
+{
+    return (UWord) 4*1024; /* Guess 4 KB */
 }
 
 Uint

@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 2010-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2010-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2669,7 +2669,6 @@ static BIF_RETTYPE do_binary_copy(Process *p, Eterm bin, Eterm en)
 	}
 	cbs->result = erts_bin_nrml_alloc(target_size); /* Always offheap
 							   if trapping */
-	erts_refc_init(&(cbs->result->refc), 1);
 	t = (byte *) cbs->result->orig_bytes; /* No offset or anything */
 	pos = 0;
 	i = 0;

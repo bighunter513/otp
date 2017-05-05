@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2013-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2013-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -1689,7 +1689,7 @@ request_client_cert(#state{ssl_options = #ssl_options{verify = verify_peer,
 	ssl_record:pending_connection_state(ConnectionStates0, read),
     TLSVersion =  ssl:tls_version(Version),
     HashSigns = ssl_handshake:available_signature_algs(SupportedHashSigns, 
-						       TLSVersion, [TLSVersion]),
+						       TLSVersion),
     Msg = ssl_handshake:certificate_request(CipherSuite, CertDbHandle, CertDbRef, 
 					    HashSigns, TLSVersion),
     State = Connection:queue_handshake(Msg, State0),

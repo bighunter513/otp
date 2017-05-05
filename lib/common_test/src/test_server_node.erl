@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2002-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2002-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 %% %CopyrightEnd%
 %%
 -module(test_server_node).
--compile(r12).
+-compile(r16).
 
 %%%
 %%% The same compiled code for this module must be possible to load
-%%% in R12B and later.
+%%% in R16B and later.
 %%%
 
 %% Test Controller interface

@@ -4,7 +4,7 @@
 <chapter>
   <header>
     <copyright>
-      <year>1999</year><year>2016</year>
+      <year>1999</year><year>2017</year>
       <holder>Ericsson AB. All Rights Reserved.</holder>
     </copyright>
     <legalnotice>
@@ -182,7 +182,14 @@
 	    message.</p>
           <p>
 	    Own Id: OTP-13853</p>
+	</item>
+
+	<item>
+	  <p>Correct handling of signature algorithm selection</p>
+          <p>
+	    Own Id: OTP-13711</p>
         </item>
+
       </list>
     </section>
 

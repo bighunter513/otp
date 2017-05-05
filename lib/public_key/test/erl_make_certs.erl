@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2011-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2011-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -351,8 +351,6 @@ gen_rsa2(Size) ->
         %% The numbers 2048,17 is choosen to not cause the cryptolib on
         %% FIPS-enabled test machines be mad at us.
         public_key:generate_key({rsa, 2048, 17})
-    of
-        {_Public, Private} -> Private
     catch
         error:notsup ->
             %% Disabled dirty_schedulers => crypto:generate_key not working

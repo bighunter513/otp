@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 2003-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2003-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -447,8 +447,8 @@ heap_dump(fmtfn_t to, void *to_arg, Eterm x)
 			ProcBin* pb = (ProcBin *) binary_val(x);
 			Binary* val = pb->val;
 
-			if (erts_atomic_xchg_nob(&val->refc, 0) != 0) {
-			    val->flags = (UWord) all_binaries;
+			if (erts_atomic_xchg_nob(&val->intern.refc, 0) != 0) {
+			    val->intern.flags = (UWord) all_binaries;
 			    all_binaries = val;
 			}
 			erts_print(to, to_arg,
@@ -529,7 +529,7 @@ dump_binaries(fmtfn_t to, void *to_arg, Binary* current)
 	    erts_print(to, to_arg, "%02X", bytes[i]);
 	}
 	erts_putc(to, to_arg, '\n');
-	current = (Binary *) current->flags;
+	current = (Binary *) current->intern.flags;
     }
 }
 

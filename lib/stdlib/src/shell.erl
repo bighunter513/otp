@@ -229,8 +229,9 @@ server_loop(N0, Eval_0, Bs00, RT, Ds00, History0, Results0) ->
     {Eval_1,Bs0,Ds0,Prompt} = prompt(N, Eval_0, Bs00, RT, Ds00),
     {Res,Eval0} = get_command(Prompt, Eval_1, Bs0, RT, Ds0),
     case Res of 
-	{ok,Es0} ->
-            case expand_hist(Es0, N) of
+	{ok,Es0,XBs} ->
+            Es1 = lib:subst_values_for_vars(Es0, XBs),
+            case expand_hist(Es1, N) of
                 {ok,Es} ->
                     {V,Eval,Bs,Ds} = shell_cmd(Es, Eval0, Bs0, RT, Ds0, cmd),
                     {History,Results} = check_and_get_history_and_results(),
@@ -276,10 +277,10 @@ get_command(Prompt, Eval, Bs, RT, Ds) ->
         fun() ->
                 exit(
                   case
-                      io:scan_erl_exprs(group_leader(), Prompt, 1)
+                      io:scan_erl_exprs(group_leader(), Prompt, 1, [text])
                   of
                       {ok,Toks,_EndPos} ->
-                          erl_parse:parse_exprs(Toks);
+                          lib:extended_parse_exprs(Toks);
                       {eof,_EndPos} ->
                           eof;
                       {error,ErrorInfo,_EndPos} ->
@@ -349,14 +350,8 @@ default_prompt(N) ->
     %% Don't bother flattening the list irrespective of what the
     %% I/O-protocol states.
     case is_alive() of
-	true  -> io_lib:format(<<"(~ts)~w> ">>, [node_string(), N]);
+	true  -> io_lib:format(<<"(~s)~w> ">>, [node(), N]);
 	false -> io_lib:format(<<"~w> ">>, [N])
-    end.
-
-node_string() ->
-    case encoding() of
-        latin1 -> io_lib:write_atom_as_latin1(node());
-        _ ->      io_lib:write_atom(node())
     end.
 
 %% expand_hist(Expressions, CommandNumber)

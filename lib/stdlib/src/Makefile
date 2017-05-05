@@ -1,7 +1,7 @@
 #
 # %CopyrightBegin%
 #
-# Copyright Ericsson AB 1996-2016. All Rights Reserved.
+# Copyright Ericsson AB 1996-2017. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,6 +58,7 @@ MODULES= \
 	edlin \
 	edlin_expand \
 	epp \
+	erl_abstract_code \
 	erl_anno \
 	erl_bits \
 	erl_compile \
@@ -119,6 +120,7 @@ MODULES= \
 	sys \
 	timer \
 	unicode \
+	unicode_util \
 	win32reg \
 	zip
 
@@ -199,6 +201,9 @@ $(APP_TARGET): $(APP_SRC) ../vsn.mk
 
 $(APPUP_TARGET): $(APPUP_SRC) ../vsn.mk
 	$(vsn_verbose)sed -e 's;%VSN%;$(VSN);' $< > $@
+
+unicode_util.erl: ../uc_spec/*
+	escript ../uc_spec/gen_unicode_mod.escript
 
 # ----------------------------------------------------
 # Release Target

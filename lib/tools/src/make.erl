@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %% 
-%% Copyright Ericsson AB 1996-2016. All Rights Reserved.
+%% Copyright Ericsson AB 1996-2017. All Rights Reserved.
 %% 
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -290,11 +290,12 @@ coerce_2_list(X) when is_atom(X) ->
 coerce_2_list(X) ->
     X.
 
-%%% If you an include file is found with a modification
+%%% If an include file is found with a modification
 %%% time larger than the modification time of the object
 %%% file, return true. Otherwise return false.
 check_includes(File, IncludePath, ObjMTime) ->
-    Path = [filename:dirname(File)|IncludePath], 
+    {ok,Cwd} = file:get_cwd(),
+    Path = [Cwd,filename:dirname(File)|IncludePath],
     case epp:open(File, Path, []) of
 	{ok, Epp} ->
 	    check_includes2(Epp, File, ObjMTime);

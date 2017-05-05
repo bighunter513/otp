@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2008-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2008-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@
 -define(SSH_MSG_DEBUG,                  4).
 -define(SSH_MSG_SERVICE_REQUEST,        5).
 -define(SSH_MSG_SERVICE_ACCEPT,         6).
+-define(SSH_MSG_EXT_INFO,               7).
 
 -define(SSH_MSG_KEXINIT,                20).
 -define(SSH_MSG_NEWKEYS,                21).
@@ -87,6 +88,20 @@
 	{
 	  name     %% string
 	 }).
+
+-record(ssh_msg_ext_info,
+       {
+         nr_extensions, %% uint32
+
+         %% repeat the following 2 fields "nr-extensions" times:
+         %%   string   extension-name
+         %%   string   extension-value
+
+         data  %% [{extension-name,    %% string
+               %%   extension-value},  %% string
+               %%         ...
+               %% ]
+       }).
 
 -record(ssh_msg_kexinit,
 	{

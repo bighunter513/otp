@@ -1,7 +1,7 @@
 #
 # %CopyrightBegin%
 #
-# Copyright Ericsson AB 1997-2016. All Rights Reserved.
+# Copyright Ericsson AB 1997-2017. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,7 +66,6 @@ MODULES= \
 	exception_SUITE \
 	float_SUITE \
 	fun_SUITE \
-	fun_r13_SUITE \
 	gc_SUITE \
 	guard_SUITE \
 	hash_SUITE \
@@ -122,7 +121,6 @@ MODULES= \
 	port_trace_SUITE \
 	unique_SUITE \
 	z_SUITE \
-	old_mod \
 	long_timers_test \
 	ignore_cores \
 	dgawd_handler \
@@ -157,7 +155,8 @@ EMAKEFILE=Emakefile
 TEST_SPEC_FILES= emulator.spec \
 		 emulator.spec.win \
 		 emulator_bench.spec \
-		 emulator_smoke.spec
+		 emulator_smoke.spec \
+                 emulator_node_container_SUITE.spec
 
 # ----------------------------------------------------
 # Release directory specification

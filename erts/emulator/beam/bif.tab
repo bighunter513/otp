@@ -1,7 +1,7 @@
 #
 # %CopyrightBegin%
 #
-# Copyright Ericsson AB 1996-2016. All Rights Reserved.
+# Copyright Ericsson AB 1996-2017. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -88,6 +88,7 @@ bif erlang:list_to_binary/1
 bif erlang:list_to_float/1
 bif erlang:list_to_integer/1
 bif erlang:list_to_pid/1
+bif erlang:list_to_port/1
 bif erlang:list_to_ref/1
 bif erlang:list_to_tuple/1
 bif erlang:loaded/0
@@ -393,6 +394,7 @@ bif erl_ddll:demonitor/1
 #
 # Bifs in the re module 
 #
+bif re:version/0
 bif re:compile/1
 bif re:compile/2
 bif re:run/2
@@ -459,8 +461,8 @@ bif error_logger:warning_map/0
 bif erlang:get_module_info/1
 bif erlang:get_module_info/2
 ubif erlang:is_boolean/1
-bif string:to_integer/1
-bif string:to_float/1
+bif string:list_to_integer/1
+bif string:list_to_float/1
 bif erlang:make_fun/3
 bif erlang:iolist_size/1
 bif erlang:iolist_to_binary/1

@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2000-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2000-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -89,11 +89,11 @@ init_per_suite(Conf) when is_list(Conf) ->
     DataDir = ?datadir,
     PrivDir = ?privdir,
     CopyDir = fname(PrivDir, "datacopy"),
+    ok = file:make_dir(CopyDir),
     TarFile = fname(PrivDir, "datacopy.tgz"),
-    {ok, Tar} = erl_tar:open(TarFile, [write, compressed]),
-    ok = erl_tar:add(Tar, DataDir, CopyDir, [compressed]),
-    ok = erl_tar:close(Tar),
-    ok = erl_tar:extract(TarFile, [compressed]),
+    ok = file:set_cwd(DataDir),
+    ok = erl_tar:create(TarFile, ["."], [compressed]),
+    ok = erl_tar:extract(TarFile, [compressed, {cwd,CopyDir}]),
     ok = file:delete(TarFile),
     [{copy_dir, CopyDir}|Conf].
 

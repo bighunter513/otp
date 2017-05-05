@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 1999-2016. All Rights Reserved.
+%% Copyright Ericsson AB 1999-2017. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -1135,7 +1135,7 @@ group_config(rsa = Type, Config) ->
                   rsa_oaep(),
                   no_padding()
                  ],
-    Generate = [{rsa, 2048, 3}, {rsa, 3072, 65537}],
+    Generate = [{rsa, 2048, 17}, {rsa, 3072, 65537}],
     [{sign_verify, SignVerify}, {pub_priv_encrypt, PubPrivEnc}, {generate, Generate} | Config];
 group_config(dss = Type, Config) ->
     Msg = dss_plain(),

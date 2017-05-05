@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 1997-2016. All Rights Reserved.
+ * Copyright Ericsson AB 1997-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -167,9 +167,7 @@ erts_cleanup_offheap(ErlOffHeap *offheap)
     for (u.hdr = offheap->first; u.hdr; u.hdr = u.hdr->next) {
 	switch (thing_subtag(u.hdr->thing_word)) {
 	case REFC_BINARY_SUBTAG:
-	    if (erts_refc_dectest(&u.pb->val->refc, 0) == 0) {
-		erts_bin_free(u.pb->val);
-	    }
+            erts_bin_release(u.pb->val);
 	    break;
 	case FUN_SUBTAG:
 	    if (erts_smp_refc_dectest(&u.fun->fe->refc, 0) == 0) {
@@ -178,8 +176,7 @@ erts_cleanup_offheap(ErlOffHeap *offheap)
 	    break;
 	case REF_SUBTAG:
 	    ASSERT(is_magic_ref_thing(u.hdr));
-	    if (erts_refc_dectest(&u.mref->mb->refc, 0) == 0)
-		erts_bin_free((Binary *)u.mref->mb);		    
+            erts_bin_release((Binary *)u.mref->mb);
 	    break;
 	default:
 	    ASSERT(is_external_header(u.hdr->thing_word));

@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %% 
-%% Copyright Ericsson AB 1996-2016. All Rights Reserved.
+%% Copyright Ericsson AB 1996-2017. All Rights Reserved.
 %% 
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@
 
 init(make_error) ->
     {error, my_error};
+init({state, State}) ->
+    {ok, State};
 init([Parent]) ->
     {ok, Parent};  %% We will send special responses for every handled event.
 init([Parent,hibernate]) ->
@@ -83,7 +85,9 @@ terminate(swap, State) ->
     {ok, State};
 terminate({error, {return, faulty}}, Parent) ->
     Parent ! {dummy_h, returned_error};
+terminate(_Reason, {undef_in_terminate, {Mod, Fun}}) ->
+    Mod:Fun(),
+    ok;
 terminate(_Reason, _State) ->
     ok.
-
 

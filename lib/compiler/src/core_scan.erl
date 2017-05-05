@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %% 
-%% Copyright Ericsson AB 2000-2016. All Rights Reserved.
+%% Copyright Ericsson AB 2000-2017. All Rights Reserved.
 %% 
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -283,10 +283,12 @@ scan1([$$|Cs0], Toks, Pos) ->				%Character constant
     scan1(Cs, [{char,Pos,C}|Toks], Pos1);
 scan1([$'|Cs0], Toks, Pos) ->				%Atom (always quoted)
     {S,Cs1,Pos1} = scan_string(Cs0, $', Pos),
-    case catch list_to_atom(S) of
+    try binary_to_atom(list_to_binary(S), utf8) of
 	A when is_atom(A) ->
-	    scan1(Cs1, [{atom,Pos,A}|Toks], Pos1);
-	_Error -> scan_error({illegal,atom}, Pos)
+	    scan1(Cs1, [{atom,Pos,A}|Toks], Pos1)
+    catch
+        error:_ ->
+            scan_error({illegal,atom}, Pos)
     end;
 scan1([$"|Cs0], Toks, Pos) ->				%String
     {S,Cs1,Pos1} = scan_string(Cs0, $", Pos),

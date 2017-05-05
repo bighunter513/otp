@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  * 
- * Copyright Ericsson AB 2006-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2006-2017. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2306,7 +2306,7 @@ ERTS_CIO_EXPORT(erts_check_io)(int do_wait)
         case ERTS_EV_TYPE_NIF: { /* Requested via enif_select()... */
             struct erts_nif_select_event in = {NIL};
             struct erts_nif_select_event out = {NIL};
-            ErtsResource* resource;
+            ErtsResource* resource = NULL;
             ErtsPollEvents revents = pollres[i].events;
 
             if (revents & ERTS_POLL_EV_ERR) {

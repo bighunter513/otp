@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 2014-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2014-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -197,7 +197,7 @@ erts_magic_ref_lookup_bin__(Uint32 refn[ERTS_REF_NUMBERS])
     else {
 	erts_aint_t refc;
 	mb = tep->mb;
-        refc = erts_refc_inc_unless(&mb->refc, 0, 0);
+        refc = erts_refc_inc_unless(&mb->intern.refc, 0, 0);
         if (refc == 0)
             mb = NULL;
     }

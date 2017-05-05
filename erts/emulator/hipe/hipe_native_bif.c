@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 2001-2016. All Rights Reserved.
+ * Copyright Ericsson AB 2001-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -323,7 +323,6 @@ char *hipe_bs_allocate(int len)
     Binary *bptr;
 
     bptr = erts_bin_nrml_alloc(len);
-    erts_refc_init(&bptr->refc, 1);
     return bptr->orig_bytes;
 }
 

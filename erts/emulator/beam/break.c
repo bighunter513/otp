@@ -1,7 +1,7 @@
 /*
  * %CopyrightBegin%
  *
- * Copyright Ericsson AB 1996-2016. All Rights Reserved.
+ * Copyright Ericsson AB 1996-2017. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -590,7 +590,7 @@ do_break(void)
 #endif
 #ifdef DEBUG
 	case 't':
-	    erts_p_slpq();
+	    /* erts_p_slpq(); */
 	    return;
 	case 'b':
 	    bin_check();
@@ -660,7 +660,7 @@ bin_check(void)
 		erts_printf("%p orig_size: %bpd, norefs = %bpd\n",
 			    bp->val, 
 			    bp->val->orig_size, 
-			    erts_refc_read(&bp->val->refc, 1));
+			    erts_refc_read(&bp->val->intern.refc, 1));
 	    }
 	}
 	if (printed) {
